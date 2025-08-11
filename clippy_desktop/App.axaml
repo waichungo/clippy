@@ -1,0 +1,41 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Clippy.App"
+             xmlns:vm="clr-namespace:Clippy.viewmodels;assembly=Clippy"
+             xmlns:cvt="clr-namespace:Clippy.converters;assembly=Clippy"
+             x:DataType="vm:AppViewModel"
+             RequestedThemeVariant="Default">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+  <TrayIcon.Icons>
+    <TrayIcons>
+      <TrayIcon Icon="/Assets/clippyIcon.ico"
+                ToolTipText="Clipboard service is running" Command="{Binding ShowWindowCommand}">
+        <TrayIcon.Menu>
+          <NativeMenu>
+            <NativeMenuItem  Header="Exit" Command="{Binding ExitCommand}" />
+          </NativeMenu>
+        </TrayIcon.Menu>
+      </TrayIcon>
+    </TrayIcons>
+  </TrayIcon.Icons>
+    <Application.Styles>
+        <FluentTheme />
+    </Application.Styles>
+  <Application.Resources>
+    <cvt:ClipTypeToContentConverter x:Key="ClipTypeToContentConverter"/>
+    <cvt:TimeToTextConverter x:Key="TimeToTextConverter"/>
+    <cvt:NameToInitialsConverter x:Key="NameToInitialsConverter"/>
+    <cvt:PageToControlConverter x:Key="PageToControlConverter"/>
+    <cvt:HomeTabToPageConverter x:Key="HomeTabToPageConverter"/>
+    <SolidColorBrush Color="#2F3C33" x:Key="DarkGreen"/>
+    <SolidColorBrush Color="#808080" x:Key="Gray"/>
+    <SolidColorBrush Color="#81C716" x:Key="AccentGreen"/>
+    <SolidColorBrush Color="#435A4A" x:Key="MutedGreen"/>
+    <SolidColorBrush Color="#5f9310" x:Key="DarkAccentGreen"/>
+    <Color x:Key="SystemAccentColor">#81C716</Color>
+    <FontFamily x:Key="Montserrat">Assets\fonts\Montserrat-Regular.ttf#Montserrat</FontFamily>
+    <FontFamily x:Key="MontserratBold">Assets\fonts\Montserrat-Bold.ttf#Montserrat</FontFamily>
+    <FontFamily x:Key="MontserratThin">Assets\fonts\Montserrat-Thin.ttf#Montserrat Thin</FontFamily>
+    <FontFamily x:Key="Phosphor">Assets\fonts\Phosphor.ttf#Phosphor</FontFamily>
+  </Application.Resources>
+</Application>
