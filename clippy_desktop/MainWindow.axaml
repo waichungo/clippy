@@ -1,0 +1,31 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="432" d:DesignHeight="450"
+        MinHeight="450"
+        MaxWidth="432"
+        MinWidth="360"
+        WindowStartupLocation="CenterScreen"
+        x:Class="Clippy.MainWindow"
+        xmlns:local="clr-namespace:Clippy;assembly=Clippy"
+        xmlns:vm="clr-namespace:Clippy.viewmodels;assembly=Clippy"
+        FontFamily="{StaticResource Montserrat}"
+        Background="{StaticResource DarkGreen}"
+        x:DataType="vm:MainWindowViewModel"
+        Title="Clippy">
+  <Grid RowDefinitions="Auto *">
+    <Grid Margin="16 16">
+      <Button Background="Transparent" Command="{Binding GoToHomeCommand}">
+        <TextBlock LetterSpacing="2" FontSize="24" FontFamily="{StaticResource MontserratBold}" FontWeight="Bold" Foreground="White">Clippy</TextBlock>
+      </Button>
+    </Grid>
+    <Grid Grid.Row="1">
+      <ContentControl Content="{Binding CurrentPage,Converter={StaticResource PageToControlConverter}}"></ContentControl>
+      <!--<local:Home></local:Home>-->
+      <!--<local:ProfilePage></local:ProfilePage>-->
+      <!--<local:RegisterPage></local:RegisterPage>-->
+    </Grid>
+  </Grid>
+
+</Window>
