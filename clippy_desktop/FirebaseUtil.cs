@@ -12,6 +12,9 @@ using Firebase.Database.Query;
 using System.Net.Http;
 using System.Net;
 using Newtonsoft.Json.Linq;
+using Clippy.viewmodels;
+using Newtonsoft.Json;
+using System.Reactive.Linq;
 
 namespace Clippy
 {
@@ -70,6 +73,7 @@ namespace Clippy
             var client = new FirebaseAuthClient(GetFirebaseAuthConfig());
             return client;
         }
+
         public static FirebaseAuthConfig GetFirebaseAuthConfig()
         {
             var config = new FirebaseAuthConfig
@@ -87,28 +91,38 @@ namespace Clippy
             return config;
         }
 
-        public async static Task<ClipItem?> CreateClip(FirebaseClient client, Clippy.viewmodels.User user, ClipItem clip)
+        public async static Task<ClipItem?> CreateClip(FirebaseClient client, Clippy.viewmodels.User user, ClipItem clip, string? machineId = null)
         {
             try
             {
                 if (clip.Id == "")
                 {
-                    clip.Id = Guid.NewGuid().ToString();
+                    clip.Id = Guid.CreateVersion7().ToString();
                 }
-                var res = await client.Child($"clips/{user.Id}/{clip.Id}").PostAsync(clip.ToJSONString(), false);
-                return ClipItem.FromJSONString(res.Object);
+                await client.Child($"clips/{user.Id}/{machineId ?? Utils.GetSystemUuid()}/{clip.Id}").PutAsync(clip.ToJSONString());
+                clip.Synced = true;
+                await UpdateClip(client, user, clip, machineId);
+                return clip;
             }
             catch (Exception ex)
             {
 
             }
             return null;
-        } 
-        public async static Task<bool> UpdateClip(FirebaseClient client, Clippy.viewmodels.User user, ClipItem clip)
+        }
+        public static string getClipItemRefString(viewmodels.User user, string? machineId = null)
+        {
+            return $"clips/{user.Id}/{machineId ?? Utils.GetSystemUuid()}";
+        }
+        public static string getDevicesRefString(viewmodels.User user)
+        {
+            return $"devices/{user.Id}";
+        }
+        public async static Task<bool> UpdateClip(FirebaseClient client, Clippy.viewmodels.User user, ClipItem clip, string? machineId = null)
         {
             try
             {
-                await client.Child($"clips/{user.Id}/{clip.Id}").PatchAsync(clip.ToJSONString());
+                await client.Child($"{getClipItemRefString(user)}/{clip.Id}").PatchAsync(clip.ToJSONString());
                 return true;
             }
             catch (Exception ex)
@@ -117,11 +131,11 @@ namespace Clippy
             }
             return false;
         }
-        public async static Task<ClipItem?> FindClip(FirebaseClient client, Clippy.viewmodels.User user, string id)
+        public async static Task<ClipItem?> FindClip(FirebaseClient client, Clippy.viewmodels.User user, string firebaseItemId, string? machineId = null)
         {
             try
             {
-                var res = await client.Child($"clips/{user.Id}/{id}").OnceSingleAsync<ClipItem>();
+                var res = await client.Child($"{getClipItemRefString(user, machineId)}/{firebaseItemId}").OnceSingleAsync<ClipItem>();
                 return res;
             }
             catch (Exception ex)
@@ -130,11 +144,11 @@ namespace Clippy
             }
             return null;
         }
-        public async static Task<bool> DeleteClip(FirebaseClient client, Clippy.viewmodels.User user, string id)
+        public async static Task<bool> DeleteClip(FirebaseClient client, Clippy.viewmodels.User user, string firebaseItemId, string? machineId = null)
         {
             try
             {
-                await client.Child($"clips/{user.Id}/{id}").DeleteAsync();
+                await client.Child($"{getClipItemRefString(user, machineId)}/{firebaseItemId}").DeleteAsync();
                 return true;
             }
             catch (Exception ex)
@@ -143,12 +157,21 @@ namespace Clippy
             }
             return false;
         }
-        public async static Task<List<ClipItem>> ListClips(FirebaseClient client, Clippy.viewmodels.User user)
+        public async static Task<List<ClipItem>> ListClips(FirebaseClient client, Clippy.viewmodels.User user, string? machineId = null, string? fromId = null)
         {
             try
             {
-                var res = await client.Child($"clips/{user.Id}").OnceAsJsonAsync();
-                var data = (JToken.Parse(res) as JArray).Select(e => ClipItem.FromJSON((e as JObject).Properties().First().Value as JObject)).ToList();
+                var q = client.Child(getClipItemRefString(user, machineId)).OrderByKey();
+                var res = "";
+                if (fromId != null)
+                {
+                    res = await q.StartAt(fromId).OnceAsJsonAsync();
+                }
+                else
+                {
+                    res = await q.OnceAsJsonAsync();
+                }
+                var data = (JToken.Parse(res) as JObject).Properties().Where(e => e.Name != fromId).Select(e => ClipItem.FromJSON(e.Value as JObject)).ToList();
                 return data;
             }
             catch (Exception ex)
@@ -157,5 +180,34 @@ namespace Clippy
             }
             return [];
         }
+        public async static Task<List<Device>> ListDevices(FirebaseClient client, Clippy.viewmodels.User user)
+        {
+            try
+            {
+                var q = client.Child(getDevicesRefString(user));
+                var res = "";
+                res = await q.OnceAsJsonAsync();
+
+                var data = (JToken.Parse(res) as JObject).Properties().Select(e => (e.Value as JObject).ToObject<Device>()).ToList();
+                return data;
+            }
+            catch (Exception ex)
+            {
+            }
+            return [];
+        }
+        public async static Task<bool> PostDevice(FirebaseClient client, Clippy.viewmodels.User user, Device device)
+        {
+            try
+            {
+                await client.Child($"{getDevicesRefString(user)}/{device.Id}").PutAsync(JsonConvert.SerializeObject(device));
+                return true;
+            }
+            catch (Exception ex)
+            {
+            }
+            return false;
+        }
+        
     }
 }
