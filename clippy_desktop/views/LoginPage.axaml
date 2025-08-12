@@ -1,0 +1,92 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Clippy.viewmodels;assembly=Clippy"
+             mc:Ignorable="d" d:DesignWidth="432" d:DesignHeight="450"
+             Background="{StaticResource DarkGreen}"
+             x:DataType="vm:LoginPageViewModel"
+             x:Class="Clippy.LoginPage">
+  <Grid  Margin="16" HorizontalAlignment="Stretch" VerticalAlignment="Top" RowDefinitions="Auto Auto">
+    <TextBlock Margin="0 32 0 0" Foreground="White" TextAlignment="Center" FontFamily="{StaticResource MontserratBold}" FontSize="24" Text="Login"></TextBlock>
+    <StackPanel Margin="0 32 0 0" Grid.Row="1" Orientation="Vertical">
+      <Border Background="{StaticResource MutedGreen}" Height="64" CornerRadius="32">
+        <TextBox Text="{Binding Email,Mode=TwoWay}" Padding="16 0" Foreground="White" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="12"  Watermark="Email" >
+          <TextBox.Styles>
+            <Style Selector="TextBox:focus">
+              <Setter Property="CornerRadius" Value="32"/>
+              <Setter Property="Background" Value="{StaticResource MutedGreen}"/>
+              <Setter Property="BorderBrush" Value="Transparent"/>
+              <Setter Property="BorderThickness" Value="0" />
+            </Style>
+            <Style Selector="TextBox /template/ Border#PART_BorderElement">
+              <Setter Property="CornerRadius" Value="32"/>
+              <Setter Property="Background" Value="{StaticResource MutedGreen}"/>
+              <Setter Property="BorderBrush" Value="Transparent"/>
+              <Setter Property="BorderThickness" Value="0" />
+            </Style>
+            <Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+              <Setter Property="CornerRadius" Value="32"/>
+              <Setter Property="Background" Value="{StaticResource MutedGreen}"/>
+              <Setter Property="BorderBrush" Value="Transparent"/>
+              <Setter Property="BorderThickness" Value="0" />
+            </Style>
+            <Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
+              <Setter Property="CornerRadius" Value="32"/>
+              <Setter Property="Background" Value="{StaticResource MutedGreen}"/>
+              <Setter Property="BorderBrush" Value="Transparent"/>
+              <Setter Property="BorderThickness" Value="0" />
+            </Style>
+          </TextBox.Styles>
+        </TextBox>
+      </Border>
+      
+      <Border Margin="0 16 0 0" Background="{StaticResource MutedGreen}" Height="64" CornerRadius="32">
+        <TextBox Text="{Binding Password,Mode=TwoWay}" PasswordChar="*" Padding="16 0" Foreground="White" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="12"  Watermark="Password" >
+          <TextBox.Styles>
+            <Style Selector="TextBox:focus">
+              <Setter Property="CornerRadius" Value="32"/>
+              <Setter Property="Background" Value="{StaticResource MutedGreen}"/>
+              <Setter Property="BorderBrush" Value="Transparent"/>
+              <Setter Property="BorderThickness" Value="0" />
+            </Style>
+            <Style Selector="TextBox /template/ Border#PART_BorderElement">
+              <Setter Property="CornerRadius" Value="32"/>
+              <Setter Property="Background" Value="{StaticResource MutedGreen}"/>
+              <Setter Property="BorderBrush" Value="Transparent"/>
+              <Setter Property="BorderThickness" Value="0" />
+            </Style>
+            <Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+              <Setter Property="CornerRadius" Value="32"/>
+              <Setter Property="Background" Value="{StaticResource MutedGreen}"/>
+              <Setter Property="BorderBrush" Value="Transparent"/>
+              <Setter Property="BorderThickness" Value="0" />
+            </Style>
+            <Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
+              <Setter Property="CornerRadius" Value="32"/>
+              <Setter Property="Background" Value="{StaticResource MutedGreen}"/>
+              <Setter Property="BorderBrush" Value="Transparent"/>
+              <Setter Property="BorderThickness" Value="0" />
+            </Style>
+          </TextBox.Styles>
+        </TextBox>
+      </Border>
+      <CheckBox HorizontalAlignment="Center" Background="Transparent" BorderBrush="White" Foreground="White"  Margin="0 16 0 8" IsChecked="{Binding SaveInfo,Mode=TwoWay}">Save info</CheckBox>
+      <Button Background="Transparent" Command="{Binding GoToRegisterPageCommand}" Padding="16 8" FontSize="12" HorizontalAlignment="Center" Margin="0 8 0 8" Foreground="#219ede" FontStyle="Italic">
+        Or register
+      </Button>
+      
+      <Button  Command="{Binding LoginCommand}" CornerRadius="32" HorizontalAlignment="Stretch" Margin="0 16 0 0"  Padding="16" Background="{StaticResource AccentGreen}" >
+        <Grid>
+          <TextBlock Padding="0 0 8 0" Foreground="White" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center">
+            Login
+          </TextBlock>
+          <Border CornerRadius="12" HorizontalAlignment="Right" Background="#FFF" Width="24" Height="24">
+            <TextBlock Foreground="{StaticResource AccentGreen}" FontFamily="{StaticResource Phosphor}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="&#xE06C;"></TextBlock>
+          </Border>
+        </Grid>
+      </Button>
+    </StackPanel>
+  </Grid>
+
+</UserControl>
