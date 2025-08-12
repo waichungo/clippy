@@ -1,0 +1,27 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="247" d:DesignHeight="64"
+             x:Class="Clippy.TabSwitcher">
+  <Border CornerRadius="32" Background="White" Padding="16 8" Height="64">
+    <Grid VerticalAlignment="Center" ColumnDefinitions="* 16 *">
+      <ToggleButton Classes="main-nav-toggle home" Width="100" MinWidth="100" CornerRadius="32" Foreground="{StaticResource DarkGreen}" Grid.Column="0" HorizontalAlignment="Stretch">
+        <Grid RowDefinitions="Auto Auto">
+          <TextBlock FontSize="16" HorizontalAlignment="Center" FontFamily="{StaticResource Phosphor}" Text="&#xE2C2;">
+            
+          </TextBlock>
+          <Label FontSize="12" HorizontalAlignment="Center" Grid.Row="1">Home</Label>
+        </Grid>
+      </ToggleButton>
+      <ToggleButton Classes="main-nav-toggle" Width="100" MinWidth="100" CornerRadius="32" Foreground="{StaticResource DarkGreen}" Grid.Column="2" HorizontalAlignment="Stretch">
+        <Grid RowDefinitions="Auto Auto">
+          <TextBlock FontSize="16" HorizontalAlignment="Center" FontFamily="{StaticResource Phosphor}" Text="&#xE228;">
+            
+          </TextBlock>
+          <Label FontSize="12" HorizontalAlignment="Center" Grid.Row="1">Settings</Label>
+        </Grid>
+      </ToggleButton>
+    </Grid>
+  </Border>
+</UserControl>
