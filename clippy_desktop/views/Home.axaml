@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:Clippy;assembly=Clippy"
+              xmlns:vm="clr-namespace:Clippy.viewmodels;assembly=Clippy"
+             x:DataType="vm:HomeViewModel"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Clippy.Home">
+  <Grid RowDefinitions="* Auto">
+    <ContentControl Content="{Binding ,Converter={StaticResource HomeTabToPageConverter}}">
+      
+    </ContentControl>
+    
+    <Grid Grid.Row="1" Panel.ZIndex="10" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 16">
+      <local:TabSwitcher />
+    </Grid>
+  </Grid>
+</UserControl>
