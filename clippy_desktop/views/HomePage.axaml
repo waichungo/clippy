@@ -1,0 +1,121 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Clippy.viewmodels;assembly=Clippy"
+             mc:Ignorable="d" d:DesignWidth="432" d:DesignHeight="450"
+             Background="Transparent"
+             Name="HomePageControl"
+             x:DataType="vm:HomePageViewModel"
+             x:Class="Clippy.HomePage">
+  <Grid RowDefinitions="Auto Auto *">
+    <Grid Margin="16" ColumnDefinitions="Auto * Auto" VerticalAlignment="Top">
+      <ComboBox SelectedIndex="{Binding SelectedDeviceIndex}" ItemsSource="{Binding Devices}" Padding="8 12" FontSize="12" Background="{StaticResource AccentGreen}" Foreground="White">
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <Label Content="{Binding Name}"></Label>
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+      <Button Command="{Binding GoToProfileCommand}" CornerRadius="24" VerticalAlignment="Center" Grid.Column="2" Width="48" Height="48" Background="{StaticResource AccentGreen}">
+        <Grid>
+          <Label IsVisible="{Binding User,Converter={x:Static ObjectConverters.IsNotNull}}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Content="{Binding User.Name,Converter={StaticResource NameToInitialsConverter}}"></Label>
+          <TextBlock IsVisible="{Binding User,Converter={x:Static ObjectConverters.IsNull}}" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="{StaticResource Phosphor}" Text="&#xE4C4;" Foreground="White"></TextBlock>
+        </Grid>
+      </Button>
+    </Grid>
+
+    <Grid Grid.Row="1" Margin="16" VerticalAlignment="Top">
+      <Border Background="{StaticResource MutedGreen}" CornerRadius="8" Height="56" BorderBrush="{StaticResource Gray}" BorderThickness="1">
+        <Grid ColumnDefinitions="* Auto">
+          <TextBox Text="{Binding Search}" Margin="16 0 0 0" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" FontSize="12" Padding=" 0 16 16 16" Watermark="Search" >
+            <TextBox.Styles>
+              <Style Selector="TextBox:focus">
+                <Setter Property="Background" Value="{StaticResource MutedGreen}"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0" />
+              </Style>
+              <Style Selector="TextBox /template/ Border#PART_BorderElement">
+                <Setter Property="Background" Value="{StaticResource MutedGreen}"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0" />
+              </Style>
+              <Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+                <Setter Property="Background" Value="{StaticResource MutedGreen}"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0" />
+              </Style>
+              <Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
+                <Setter Property="Background" Value="{StaticResource MutedGreen}"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0" />
+              </Style>
+            </TextBox.Styles>
+          </TextBox>
+          <Button Command="{Binding SearchClipCommand}" Foreground="White" CornerRadius="4" MinWidth="48" HorizontalContentAlignment="Center" FontSize="24" VerticalContentAlignment="Center" Margin="4" VerticalAlignment="Stretch" FontFamily="{StaticResource Phosphor}" Grid.Column="1" Content="&#xE30C;">
+            <Button.Styles>
+              <Style Selector="Button">
+                <Setter Property="Background" Value="{StaticResource AccentGreen}"></Setter>
+              </Style>
+              <Style Selector="Button /template/ ContentPresenter">
+                <Setter Property="Background" Value="{StaticResource AccentGreen}"></Setter>
+              </Style>
+              <Style Selector="Button:pointerover /template/ ContentPresenter">
+                <Setter Property="Background" Value="{StaticResource DarkAccentGreen}"></Setter>
+              </Style>
+              <Style Selector="Button:pressed /template/ ContentPresenter">
+                <Setter Property="Background" Value="{StaticResource DarkAccentGreen}"></Setter>
+              </Style>
+            </Button.Styles>
+          </Button>
+        </Grid>
+      </Border>
+    </Grid>
+    <Grid Margin="16 16 0 16" Grid.Row="2" RowDefinitions="Auto *">
+      <TextBlock>
+        <Run>Showing</Run>
+        <Run Text="{Binding Clips.Count}"></Run>
+        <Run>entries</Run>
+      </TextBlock>
+      <ScrollViewer  Margin="0 16 0 0" Grid.Row="1">
+        <ItemsControl Margin="0 0 16 0" ItemsSource="{Binding Clips}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <StackPanel Spacing="16" Orientation="Vertical"/>
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <Border Background="{StaticResource MutedGreen}" CornerRadius="32" Padding="8" >
+                <Border.Effect>
+                  <DropShadowEffect Color="#000000" BlurRadius="16" Opacity=".6"/>
+                </Border.Effect>
+                <Grid  ColumnDefinitions="Auto * Auto">
+                  <Border VerticalAlignment="Top" Width="64" Height="64" CornerRadius="32" Background="White">
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontFamily="{StaticResource Phosphor}" Foreground="{StaticResource DarkGreen}" Text="&#xE0A8;"></TextBlock>
+                  </Border>
+                  <Grid VerticalAlignment="Center" RowDefinitions="Auto Auto Auto"  Grid.Column="1" Margin="16 0 0 0">
+                    <Label Foreground="White" Margin="0 4 0 0" FontSize="8" FontFamily="{StaticResource MontserratBold}">This device</Label>
+                    <TextBlock MaxLines="7" Foreground="White"  Margin="0 4 0 0" Grid.Row="1" FontSize="12" ToolTip.Tip="{Binding , Converter={StaticResource ClipTypeToContentConverter}}" Text="{Binding , Converter={StaticResource ClipTypeToContentConverter}}" ></TextBlock>
+                    <TextBlock ToolTip.Tip="{Binding CreatedAt, Converter={StaticResource TimeToTextConverter}}" Text="{Binding UpdatedAt , Converter={StaticResource TimeToTextConverter}}" Foreground="GreenYellow" FontStyle="Italic" Margin="0 4 0 0" Grid.Row="2" FontSize="10" >02:16 am</TextBlock>
+                  </Grid>
+
+                  <Border  Background="#804CAF50" VerticalAlignment="Top" MinWidth="80" Grid.Column="2" CornerRadius="8" Padding="8" Margin="0 8 8 0">
+                    <Grid VerticalAlignment="Center" HorizontalAlignment="Center" ColumnDefinitions="Auto 16 Auto">
+                      <Button Grid.Column="0" Command="{Binding #HomePageControl.((vm:HomePageViewModel)DataContext).CopyToClipboard}" CommandParameter="{Binding}">
+                        <TextBlock Foreground="White"   FontFamily="{StaticResource Phosphor}" FontSize="16" Text="&#xE1CA;"></TextBlock>
+                      </Button>
+                      <Button Grid.Column="2" Command="{Binding #HomePageControl.((vm:HomePageViewModel)DataContext).DeleteClipItemCommand}" CommandParameter="{Binding}">
+                        <TextBlock Foreground="White"  FontFamily="{StaticResource Phosphor}" FontSize="16" Text="&#xE4A6;"></TextBlock>
+                      </Button>
+                    </Grid>
+                  </Border>
+                </Grid>
+              </Border>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+    </Grid>
+  </Grid>
+</UserControl>
