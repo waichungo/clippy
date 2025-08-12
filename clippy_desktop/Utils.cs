@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Management;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -45,6 +46,25 @@ namespace Clippy
                 break;
             }
             return systemUuid;
+        }
+        public static async Task<bool> IsInternetAvailable()
+        {
+            using HttpClient client = new HttpClient();
+            using var request = new HttpRequestMessage(HttpMethod.Head, "https://www.google.com");
+            client.Timeout = TimeSpan.FromSeconds(5);
+            for (int i = 0; i < 5; i++)
+            {
+                try
+                {
+                    using HttpResponseMessage response = await client.SendAsync(request);
+                    return response.IsSuccessStatusCode;
+                }
+                catch
+                {
+                }
+                await Task.Delay(200);
+            }
+            return false;
         }
         public static void ExecuteOnMainThread(Action action)
         {
