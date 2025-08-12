@@ -1,0 +1,76 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Clippy.viewmodels;assembly=Clippy"
+               mc:Ignorable="d" d:DesignWidth="432" d:DesignHeight="450"
+             Background="{StaticResource DarkGreen}"             
+             x:DataType="vm:SettingPageViewModel"
+             x:Class="Clippy.SettingsPage">
+  <Grid RowDefinitions="Auto  *">
+    <Grid Margin="16" ColumnDefinitions="Auto * Auto" VerticalAlignment="Top">
+      <Label Foreground="White" FontSize="16" FontFamily="{StaticResource MontserratBold}">Settings</Label>
+    </Grid>
+
+
+    <Grid Margin="16 16 0 16" Grid.Row="1" >
+
+      <ScrollViewer  Margin="0 16 16 0" Grid.Row="1">
+        <StackPanel Orientation="Vertical" Spacing="16">
+          
+
+          <Border Background="{StaticResource MutedGreen}" CornerRadius="32" Height="64">
+            <Border.Effect>
+              <DropShadowEffect Color="#000000" BlurRadius="16" Opacity=".6"/>
+            </Border.Effect>
+            <Grid  ColumnDefinitions="Auto * Auto">
+              <Label VerticalAlignment="Center" FontFamily="{StaticResource MontserratThin}" Margin="16 0 16 0" FontSize="12" Foreground="White">Launch at startup</Label>
+
+              <Border Background="#804CAF50" VerticalAlignment="Stretch" MinWidth="80" Grid.Column="2" CornerRadius="32">
+                <Grid VerticalAlignment="Center" HorizontalAlignment="Center" >
+                  <CheckBox Padding="0" BorderBrush="White" Foreground="White"></CheckBox>
+                </Grid>
+              </Border>
+            </Grid>
+          </Border>
+          
+          <Border Background="{StaticResource MutedGreen}" CornerRadius="32" Height="64">
+            <Border.Effect>
+              <DropShadowEffect Color="#000000" BlurRadius="16" Opacity=".6"/>
+            </Border.Effect>
+            <Grid  ColumnDefinitions="Auto * Auto">
+              <Label VerticalAlignment="Center" FontFamily="{StaticResource MontserratThin}" Margin="16 0 16 0" FontSize="12" Foreground="White">Monitor clipboard</Label>
+
+              <Border Background="#804CAF50" VerticalAlignment="Stretch" MinWidth="80" Grid.Column="2" CornerRadius="32">
+                <Grid VerticalAlignment="Center" HorizontalAlignment="Center" >
+                  <CheckBox Padding="0" BorderBrush="White" Foreground="White"></CheckBox>
+                </Grid>
+              </Border>
+            </Grid>
+          </Border> 
+          
+          <Border Background="{StaticResource MutedGreen}" CornerRadius="32" Height="64">
+            <Border.Effect>
+              <DropShadowEffect Color="#000000" BlurRadius="16" Opacity=".6"/>
+            </Border.Effect>
+            <Grid  ColumnDefinitions="Auto * Auto">
+              <Label VerticalAlignment="Center" FontFamily="{StaticResource MontserratThin}" Margin="16 0 16 0" FontSize="12" Foreground="White">Monitor image clips</Label>
+
+              <Border Background="#804CAF50" VerticalAlignment="Stretch" MinWidth="80" Grid.Column="2" CornerRadius="32">
+                <Grid VerticalAlignment="Center" HorizontalAlignment="Center" >
+                  <CheckBox Padding="0" BorderBrush="White" Foreground="White"></CheckBox>
+                </Grid>
+              </Border>
+            </Grid>
+          </Border>
+          
+         
+
+         
+
+          
+        </StackPanel>
+      </ScrollViewer>
+    </Grid>
+  </Grid>
+</UserControl>
