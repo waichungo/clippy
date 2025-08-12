@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Clippy.viewmodels;assembly=Clippy"
+             x:DataType="vm:ProfileViewModel"
+             Background="{StaticResource DarkGreen}"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Clippy.ProfilePage">
+  <Grid RowDefinitions="Auto  *">
+    <Grid Margin="16" ColumnDefinitions="Auto * Auto" VerticalAlignment="Top">
+      <Label Foreground="White" FontSize="16" FontFamily="{StaticResource MontserratBold}">Profile</Label>
+    </Grid>
+
+
+    <Grid Margin="16 16 0 16" Grid.Row="1" >
+
+      <StackPanel Spacing="36" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 16 16 0" Grid.Row="1">
+
+        <Border CornerRadius="36" Width="72" Height="72" Background="{StaticResource AccentGreen}">
+          <TextBlock LetterSpacing="2" FontSize="24" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center">JW</TextBlock>
+        </Border>
+        <Grid RowDefinitions="Auto Auto">
+          <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Foreground="White" FontSize="16" FontFamily="{StaticResource MontserratBold}">James Waichungo</TextBlock>
+          <TextBlock Grid.Row="1" Margin="0 16 0 0" HorizontalAlignment="Center" TextAlignment="Center" Foreground="White" FontSize="12">
+            <Run Foreground="#ADADAD" Text="Active devices:"></Run>
+            <Run Foreground="White" FontFamily="{StaticResource MontserratBold}" Text="2"></Run>
+          </TextBlock>
+        </Grid>
+        <Button Command="{Binding LogoutCommand}" MinWidth="160" CornerRadius="16" Padding="16" Background="#FC4850" HorizontalAlignment="Center">
+          <Grid>
+            <TextBlock Padding="0 0 8 0" Foreground="White" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center">
+              Logout
+            </TextBlock>
+            <Border CornerRadius="12" HorizontalAlignment="Right" Background="#FFF" Width="24" Height="24">
+              <TextBlock Foreground="Red" FontFamily="{StaticResource Phosphor}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="&#xE06C;"></TextBlock>
+            </Border>
+          </Grid>
+        </Button>
+      </StackPanel>
+    </Grid>
+  </Grid>
+</UserControl>
