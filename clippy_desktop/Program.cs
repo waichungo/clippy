@@ -47,10 +47,6 @@ class Program
     static void Setup(string[] args)
     {
         DBAccess.Initialize();
-
-       
-
-        MainWindow.context.CurrentClipItems = new(ClipItemDBUtility.FindClipItems(orderKey: "updated_at", orderDescending: false).Entries);
         MessagePipe = new NamedPipe(PipeName, (message) =>
         {
             try
